@@ -1,0 +1,30 @@
+[
+  {
+    "question": "Where is my order?",
+    "answer": "You can track your order in the Orders section."
+  },
+  {
+    "question": "How to return a product?",
+    "answer": "Go to your orders and click on return item."
+  },
+  {
+    "question": "What payment methods are available?",
+    "answer": "We accept UPI, credit cards, and net banking."
+  },
+  {
+    "question": "How long does delivery take?",
+    "answer": "Delivery usually takes 3-5 business days."
+  },
+  {
+    "question": "How to cancel my order?",
+    "answer": "Go to your orders and select cancel order."
+  },
+  {
+  "question": "hi",
+  "answer": "Hello! How can I assist you today?"
+},
+{
+  "question": "how are you",
+  "answer": "I'm just a bot, but I'm here to help you!"
+}
+]

@@ -1,0 +1,85 @@
+# =========================
+# Python
+# =========================
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.log
+*.sqlite3
+
+# Virtual environment
+venv/
+env/
+ENV/
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+
+# =========================
+# Environment variables
+# =========================
+.env
+
+# =========================
+# Model / Data (optional)
+# =========================
+*.csv
+*.json
+*.pt
+*.bin
+
+# If you want to keep your FAQ data, comment below:
+# !backend/data/faq.json
+
+# =========================
+# Logs
+# =========================
+logs/
+*.log
+
+# =========================
+# FAISS index files
+# =========================
+*.index
+
+# =========================
+# Node / React
+# =========================
+node_modules/
+build/
+dist/
+
+frontend-react/node_modules/
+frontend-react/build/
+frontend-react/dist/
+
+# =========================
+# OS files
+# =========================
+.DS_Store
+Thumbs.db
+
+# =========================
+# IDE
+# =========================
+.vscode/
+.idea/
+# Virtual environment
+venv/
+env/
+ENV/
+backend/myenv/
+
+# Data
+*.csv
+*.json
+*.pt
+*.bin
+
+backend/myenv/
+frontend-react/node_modules/
+*.index
+*.csv
+*.json
+!backend/data/faq.json

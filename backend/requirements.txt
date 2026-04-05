@@ -1,0 +1,7 @@
+flask-cors
+flask
+sentence-transformers
+requests
+scikit-learn
+faiss-cpu
+

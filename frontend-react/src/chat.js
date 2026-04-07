@@ -1,25 +1,32 @@
-import React, { useState, useRef, useEffect } from "react"; 
+import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
 import Message from "./Message";
+import "./styles/chat.css";
 
 const API_URL = "http://127.0.0.1:5000/chat";
 
 function Chat() {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
-
+  const [open, setOpen] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const textareaRef = useRef(null);
   const bottomRef = useRef(null);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages]);
-
+  }, [messages, loading]);
 
   const sendMessage = async () => {
     if (!input.trim()) return;
 
     const userMessage = { sender: "user", text: input };
     setMessages((prev) => [...prev, userMessage]);
+    setInput("");
+    if (textareaRef.current) {
+        textareaRef.current.style.height = "auto";
+      }
+    setLoading(true);
 
     try {
       const res = await axios.post(API_URL, {
@@ -28,40 +35,62 @@ function Chat() {
 
       const botMessage = {
         sender: "bot",
-        text:`${res.data.response}` 
-        // text: `${res.data.response} (Confidence: ${res.data.confidence.toFixed(2)})`,
-        
+        text: res.data.response,
       };
 
       setMessages((prev) => [...prev, botMessage]);
     } catch (error) {
       setMessages((prev) => [
         ...prev,
-        { sender: "bot", text: "Error connecting to server" },
+        { sender: "bot", text: "⚠️ Server error. Try again." },
       ]);
     }
 
-    setInput("");
+    setLoading(false);
   };
 
   return (
-    <div className="chat-container">
-      <div className="chat-box">
-  {messages.map((msg, index) => (
-    <Message key={index} sender={msg.sender} text={msg.text} />
-  ))}
-  <div ref={bottomRef} />
-</div>
+    <>
+      {/* Floating Button */}
+      <div className="chat-toggle" onClick={() => setOpen(!open)}>
+        💬
+      </div>
 
-      <div className="input-box">
-       <textarea
+      {/* Chat Window */}
+      {open && (
+        <div className="chat-container">
+          
+          {/* Header */}
+          <div className="chat-header">
+            <div>
+              <div className="chat-title">Support</div>
+              <div className="chat-status">🟢 Active now</div>
+            </div>
+            <button onClick={() => setOpen(false)}>✖</button>
+          </div>
+
+          {/* Messages */}
+          <div className="chat-body">
+            {messages.map((msg, index) => (
+              <Message key={index} sender={msg.sender} text={msg.text} />
+            ))}
+
+            {loading && <div className="typing">Typing...</div>}
+
+            <div ref={bottomRef} />
+          </div>
+
+          {/* Input */}
+          <div className="chat-input">
+            <textarea
               value={input}
+              ref={textareaRef}
               onChange={(e) => {
                 setInput(e.target.value);
                 e.target.style.height = "auto";
                 e.target.style.height = e.target.scrollHeight + "px";
               }}
-              placeholder="Type your message..."
+              placeholder="Write a message..."
               rows={1}
               onKeyDown={(e) => {
                 if (e.key === "Enter" && !e.shiftKey) {
@@ -70,9 +99,11 @@ function Chat() {
                 }
               }}
             />
-        <button onClick={sendMessage}>Send</button>
-      </div>
-    </div>
+            <button onClick={sendMessage}>Send</button>
+          </div>
+        </div>
+      )}
+    </>
   );
 }
 
